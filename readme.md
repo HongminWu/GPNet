@@ -59,17 +59,17 @@ Results of the scripts in simulator
 ```
 python -m simulateTest.gripperSimpleCollision
 ```
-![](/home/user/GPNet/images/gripperSimpleCollision.png) 
+![](./images/gripperSimpleCollision.png) 
 
 ```
 python -m simulateTest.gripperPoseTransform
 ```
-![](/home/user/GPNet/images/gripperPoseTransform.png) 
+![](./images/gripperPoseTransform.png) 
 
 ```
 python -m simulateTest.visualization
 ```
-![](/home/user/GPNet/images/visualization.png) 
+![](./images/visualization.png) 
 
 ## Citation
 ````
