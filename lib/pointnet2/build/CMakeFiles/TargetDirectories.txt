@@ -1,0 +1,3 @@
+/home/user/GPNet/lib/pointnet2/build/CMakeFiles/rebuild_cache.dir
+/home/user/GPNet/lib/pointnet2/build/CMakeFiles/edit_cache.dir
+/home/user/GPNet/lib/pointnet2/build/CMakeFiles/pointnet2_ext.dir

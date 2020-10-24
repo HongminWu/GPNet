@@ -180,5 +180,5 @@ def contactVisualization(mesh, contact1, contact2):
 
 
 
-# if __name__ == '__main__':
-#     meshVisualization(trimesh.convex.convex_hull(np.array([[0.1, 0, 0], [0, 0.1, 0], [0, 0, 0.1], [0, 0, 0]])))
+if __name__ == '__main__':
+    meshVisualization(trimesh.convex.convex_hull(np.array([[0.1, 0, 0], [0, 0.1, 0], [0, 0, 0.1], [0, 0, 0]])))
