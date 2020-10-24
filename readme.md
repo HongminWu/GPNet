@@ -1,14 +1,14 @@
 # Grasp Proposal Networks: An End-to-End Solution for Visual Learning of Robotic Grasps 
 Pytorch implementation of [GPNet](https://arxiv.org/abs/2009.12606).
 
-## Environment
-- Ubuntu 16.04
-- pytorch 0.4.1
+## Environment (installed)
+- Ubuntu 16.04 
+- pytorch 0.4.1 
 - CUDA 8.0 or CUDA 9.2
 
 Our depth images are saved in `.exr` files, please install the [OpenEXR](https://github.com/AcademySoftwareFoundation/openexr/blob/master/INSTALL.md), then run `pip install OpenEXR`.
 
-## Build CUDA kernels
+## Build CUDA kernels (installed)
 - ``cd lib/pointnet2``
 - ``mkdir build && cd build``
 - ``cmake .. && make``
@@ -17,7 +17,7 @@ Our depth images are saved in `.exr` files, please install the [OpenEXR](https:/
 Our dataset is available at [Google Driver](https://drive.google.com/file/d/1hZmQhuTrKRn8BMyAq-bI13rQSrdGQdJH/view?usp=sharing). 
 [Backup](https://pan.baidu.com/s/1Gf0cIgaL1s30n22z7sOuRA) (2qln).
 
-## Simulation Environment
+## Simulation Environment (installed)
 The simulation environment is built on [PyBullet](https://pybullet.org/wordpress/). You can use `pip` to install the python packages: 
 ````
 pip install pybullet
