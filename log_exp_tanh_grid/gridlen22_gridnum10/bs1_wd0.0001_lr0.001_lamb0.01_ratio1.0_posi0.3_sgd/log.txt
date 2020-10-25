@@ -1,0 +1,2 @@
+Namespace(batch_size=1, dataset_root='/home/user/GPNet/dataset/GPNet_release_data', grid=True, grid_len=22, grid_num=10, lamb=0.01, logdir='log_exp_tanh_grid', lr=0.001, manualSeed=1, momentum=0.9, nepoch=500, optimizer='sgd', posi_ratio=0.3, print_freq=1, ratio=1.0, resume=None, start_epoch=1, tanh=True, wd=0.0001, workers=8)
+

@@ -7,7 +7,13 @@ import torch
 import torch.utils.data as data
 import OpenEXR
 import Imath
+
+import sys
+ros_path = '/opt/ros/kinetic/lib/python2.7/dist-packages'
+if ros_path in sys.path:
+    sys.path.remove(ros_path)
 import cv2
+
 from skimage import io
 from skimage.transform import resize
 

@@ -34,6 +34,12 @@ The simulation environment will be available soon. -->
 ## Training
 ``CUDA_VISIBLE_DEVICES=0,1 python train --tanh --grid --dataset_root path_to_dataset``
 
+- ImportError: cannot import name 'pytorch_utils'
+```
+copy the file pytorch_utils.py from https://github.com/sshaoshuai/Pointnet2.PyTorch/tree/master/pointnet2  
+and paste to ~/GPNet/lib/pointnet2/utils
+```
+
 ## Test
 ````
 CUDA_VISIBLE_DEVICES=0,1 python test --tanh --grid --dataset_root path_to_dataset --resume pretrained_model/checkpoint_440.pth.tar
