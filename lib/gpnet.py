@@ -342,7 +342,7 @@ class GraspPoseNet(nn.Module):
                     grid_feat_ = grid_feat[:, :, i].view(bs, -1, 1)
                     gather_feat = grid_feat_.expand(-1, C, local_point_num) + gather_feat
                 feat_list.append(gather_feat)
-                if (i + 1) % 5000 == 0 or (i + 1) == num_proposal:
+                if (i + 1) % 1000 == 0 or (i + 1) == num_proposal: # smaller for 1 GPU running
                     gather_feat_batch = torch.stack(feat_list, 2).contiguous()
                     prop_score = self.ap(gather_feat_batch, local_pc_batch)
                     prop_posi_idx = torch.nonzero(prop_score.view(-1)>0.5).view(-1)
@@ -401,7 +401,7 @@ class GraspPoseNet(nn.Module):
                     # grid_feat_list.append(gather_grid_feat)
                     gather_grid_angle_feat = grid_angle_feat_.expand(-1, C, local_point_num) + gather_feat
                     grid_angle_feat_list.append(gather_grid_angle_feat)
-                    if (i + 1) % 5000 == 0 or (i + 1) == num_pred:
+                    if (i + 1) % 1000 == 0 or (i + 1) == num_pred: # smaller for 1 GPU running
                         # gather_grid_feat_batch = torch.stack(grid_feat_list, 2).contiguous()
                         # anti_score = self.ap(gather_grid_feat_batch)
                         # grid_feat_list = []

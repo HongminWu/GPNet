@@ -22,6 +22,7 @@ from loss import angle_loss
 import warnings
 warnings.filterwarnings("ignore")
 
+
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset_root', type=str, default='/data/wuchaozheng/dataset/shapenetSemGrasp/nips2020/new_9cls/', help='dataset root dir')
 parser.add_argument('--batch_size', type=int, default=1, help='batch size')
@@ -160,19 +161,26 @@ def main():
 
             st = time.time()
             # Due to the limit of GPU memory, we need two GPU. One for model training, another for grasp proposal.
-            pc1, grids1, contact_index1, center1, scores1 = pc_.float().cuda(1), grids_.float().cuda(1), \
-                    contact_index_.long().cuda(1), center_.float().cuda(1), scores_.float().cuda(1)
-
-            pc, grids, angles, contact_index, center, scores, grasps_idx, posi_mask = \
-                            pc_.float().cuda(0), grids_.float().cuda(0), angles_.float().cuda(0), \
-                            contact_index_.long().cuda(0), center_.float().cuda(0), \
-                            scores_.float().cuda(0), grasps_idx_.long().cuda(0), posi_mask_.float().cuda(0)
+            training_PC, grids, angles, contact_index, center, scores, grasps_idx, posi_mask = pc_.float().cuda(0), \
+                                                                                      grids_.float().cuda(0), \
+                                                                                      angles_.float().cuda(0), \
+                                                                                      contact_index_.long().cuda(0),\
+                                                                                      center_.float().cuda(0), \
+                                                                                      scores_.float().cuda(0), \
+                                                                                      grasps_idx_.long().cuda(0), \
+                                                                                      posi_mask_.float().cuda(0)
+            # default: cuda 1                                                              
+            proposal_PC, grids1, contact_index1, center1, scores1 = pc_.float().cuda(0),\
+                                                                    grids_.float().cuda(0),\
+                                                                    contact_index_.long().cuda(0),\
+                                                                    center_.float().cuda(0),\
+                                                                    scores_.float().cuda(0)          
 
             data_index = torch.arange(contact_index_.size(1)).long().cuda()
 
             radius = grid_len / grid_num * np.sqrt(3)
             pairs_all_, scores_all_, offsets_all_, local_points_, data_index_, prop_label_, posi_prop_idx_, \
-            nega_prop_idx_, posi_idx_, nega_idx_ = getProposals(pc1, grids1, center1, contact_index1, \
+            nega_prop_idx_, posi_idx_, nega_idx_ = getProposals(proposal_PC, grids1, center1, contact_index1, \
                                                                 scores1, data_index, radius=radius)
 
             del (grids1, center1, contact_index1, scores1)
@@ -189,9 +197,9 @@ def main():
             grasp_center_ = center_[:, posi_nega_idx_[0]].float()
             grasp_contact_ = contact_[:, posi_nega_idx_[0]].float()
             grasp_angle_ = angles_scorer_[:, posi_nega_idx_[0]].float()
-            grasp_center1 = grasp_center_.cuda(1)
-            grasp_contact1 = grasp_contact_.cuda(1)
-            grasp_local_points_ = getLocalPoints(pc1, grasp_contact1, grasp_center1)
+            grasp_center1 = grasp_center_.cuda(0)   # cuda 1
+            grasp_contact1 = grasp_contact_.cuda(0) # cuda 1
+            grasp_local_points_ = getLocalPoints(proposal_PC, grasp_contact1, grasp_center1)
             grasp_local_points = grasp_local_points_.cuda(0).long()
             grasp_center, grasp_angle = grasp_center_.cuda(0), grasp_angle_.cuda(0).unsqueeze(-1)
             grasp_label = scores_[:, posi_nega_idx_[0]].float().cuda(0)
@@ -201,7 +209,7 @@ def main():
                 nega_idx_, grasp_local_points_, grasp_center1, grasp_contact1)
 
             prop_score, pred_score, pred_offset, pred_angle, posi_prop_idx, nega_prop_idx, posi_idx, nega_idx\
-             = net(pc, local_points, pairs_all, posi_prop_idx, nega_prop_idx, posi_idx, nega_idx, grasp_center,
+             = net(training_PC, local_points, pairs_all, posi_prop_idx, nega_prop_idx, posi_idx, nega_idx, grasp_center,
                     grasp_angle, grasp_local_points)
             
             prop_label = prop_label[:, torch.cat([posi_prop_idx.view(-1), nega_prop_idx.view(-1)], 0)]

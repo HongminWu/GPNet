@@ -1,5 +1,6 @@
 # Grasp Proposal Networks: An End-to-End Solution for Visual Learning of Robotic Grasps 
 Pytorch implementation of [GPNet](https://arxiv.org/abs/2009.12606).
+![](./images/network.png) 
 
 ## Environment (installed)
 - Ubuntu 16.04 
@@ -33,6 +34,30 @@ The simulation environment will be available soon. -->
 
 ## Training
 ``CUDA_VISIBLE_DEVICES=0,1 python train --tanh --grid --dataset_root path_to_dataset``
+
+For our situtation,  only 1 GPU, the following items shoud be changed accordingly.
+1.change the  following lines with cuda(0)  in train.py file
+```
+proposal_PC, grids1, contact_index1, center1, scores1 = pc_.float().cuda(0),\
+                                                                    grids_.float().cuda(0),\
+                                                                    contact_index_.long().cuda(0),\
+                                                                    center_.float().cuda(0),\
+                                                                    scores_.float().cuda(0)
+                                                                    
+grasp_center1 = grasp_center_.cuda(0)                                                                                                              
+grasp_contact1 = grasp_contact_.cuda(0)
+```
+2.Changing the values 
+```
+emacs ../lib/gpnet.py #L345
+emacs ../lib/gpnet.py #L404
+change the 5000 to 1000
+```
+
+Then, run the training by
+```
+CUDA_VISIBLE_DEVICES=0 python train.py --tanh --grid --dataset_root /home/user/GPNet/dataset/GPNet_release_data
+```
 
 - ImportError: cannot import name 'pytorch_utils'
 ```
