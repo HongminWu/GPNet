@@ -7,7 +7,7 @@ import torch
 import torch.utils.data as data
 import OpenEXR
 import Imath
-import cv2
+# import cv2 # commented by HongminWu
 from skimage import io
 from skimage.transform import resize
 

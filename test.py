@@ -114,7 +114,7 @@ def main():
             print(shape, i)
             print(grids_.size(), contact_index_.size(), pc_.size())
 
-            pc1, grids1, contact_index1 = pc_.float().cuda(1), grids_.float().cuda(1), contact_index_.long().cuda(1)
+            pc1, grids1, contact_index1 = pc_.float().cuda(0), grids_.float().cuda(0), contact_index_.long().cuda(0) # default cuda(1) HongminWu
 
             pc, grids, contact_index = pc_.float().cuda(0), grids_.float().cuda(0), contact_index_.long().cuda(0)
 
